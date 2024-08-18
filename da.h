@@ -5,13 +5,16 @@
 // header only library, and with more functionality
 //
 // Instuctions:
-// To use: Define BASE64_IMPL and include this header ONCE.
+// To use: Define DA_IMPL and include this header ONCE.
 // In all other files just include it, without any definitions.
 
 #ifndef DA_H_
 #define DA_H_
 
 // Header file
+
+#include <stdlib.h>
+#include <string.h>
 
 #define DA_START_SIZE 1
 
@@ -63,9 +66,6 @@ void da_free(void* array);
 
 #ifdef DA_IMPL
 
-#include <stdlib.h>
-#include <string.h>
-
 void* _da_new(size_t capacity, size_t stride) {
     int size = sizeof(size_t) * DA_FIELDS + capacity*stride;
     size_t* array = malloc(size);
@@ -97,7 +97,7 @@ void* _da_resize(void* array) {
 
 void* _da_push(void* array, void* elementptr) {
     if (da_length(array) >= da_capacity(array)) array = _da_resize(array);
-
+    
     memcpy(array + da_length(array)*da_stride(array), elementptr, da_stride(array));
 
     _da_set(array, DA_LENGTH, da_length(array)+1);
