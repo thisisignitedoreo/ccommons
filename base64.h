@@ -46,17 +46,13 @@ const char* b64_error();
 
 int B64_ERROR_CODE = -1;
 
-#ifndef B64_MAX_STR_LENGTH
-#define B64_MAX_STR_LENGTH 64000
-#endif
-
 const char* b64_encode_alphabet(const char* string, const char* alphabet) {
-    if (strnlen(alphabet, 66) != 65) {
+    if (strlen(alphabet) != 65) {
         B64_ERROR_CODE = B64_ALPHABET_ERROR;
         return 0;
     }
     
-    int length = strnlen(string, B64_MAX_STR_LENGTH);
+    int length = strlen(string);
     
     int pad = 0;
     if (length % 3 == 1) pad = 2;
@@ -141,12 +137,12 @@ int _b64_count(char charachter, const char* string) {
 }
 
 const char* b64_decode_alphabet(const char* string, const char* alphabet) {
-    if (strnlen(alphabet, 66) != 65) {
+    if (strlen(alphabet) != 65) {
         B64_ERROR_CODE = B64_ALPHABET_ERROR;
         return 0;
     }
 
-    int length = strnlen(string, B64_MAX_STR_LENGTH);
+    int length = strlen(string);
     if (length % 4 != 0) {
         B64_ERROR_CODE = B64_INVALID_LENGTH;
         return 0;
